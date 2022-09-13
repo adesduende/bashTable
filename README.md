@@ -26,8 +26,8 @@ G1_G2_G3_G4_G5\n'
  If you want to change column separator or other thing. Are some options aviable to do that.
  - **h**:   Show the help panel
  - **d**:   Delimiter column char. ex: -d "|"
- - **l**:   Change the chars of the lines of data
- - **t**:   Change the chars of the lines of header
+ - **l**:   Change the chars of the lines of data "horizontal vertical corner" ex: -l "- | +"[^2]
+ - **t**:   Change the chars of the lines of header "horizontal vertical corner" ex: -t "═ ║ ╬"
  - **c**:   Change the color[^1]
  - **v**:   Show version of the script
  - **i**:   Display info abot number of cols an rows
@@ -42,3 +42,4 @@ G1_G2_G3_G4_G5\n'
 ![Screenshot1](screenshot_000.png)
 
 [^1]: **Colors** "Black Red Green Orange Blue Purple Cyan Light_Gray Dark_Gray Light_Red Light_Green Yellow Light_Blue Light_Purple Light_Cyan White"
+[^2]: **Some Chars** ▓ ▒ ░ │ ┤ ╣ ║ ╝ ╗ └ ┴ ┬ ├ ─ ┼ ╚ ╔ ╩ ╦ ╠ ═ ╬ █ ▄ ¦ ▀ ■
