@@ -86,6 +86,7 @@ do
     case $args in
          i) #Display info
             showInfo=1
+            let optcount+=1
          ;;
          c) #Selected Color
             readarray -t chars <<< "$(tr ' ' '\n' <<< $OPTARG)"
@@ -237,8 +238,8 @@ function printTable(){
     #Get the init row
     init_row=$optcount
 
-    #Get number of columns of the first line
-    readarray -t fcolumn <<< "$(tr $separator '\n' <<< "${dats[$init_row]}")"
+    #Get number of columns of the first line    
+    readarray -t fcolumn <<< "$(sed "s/$separator/\n-/g" <<< "${dats[$init_row]}")"
     cols=${#fcolumn[*]}
 
     #Save data ina matrix
@@ -250,8 +251,9 @@ function printTable(){
     for ((j=$init_row;j<=$rows;j++));
     do
         #Split the row in cols
-        readarray -t column <<< "$(tr $separator $'\n' <<< "${dats[$j]}")"
+        readarray -t column <<< "$(sed "s/$separator/\n/g" <<< "${dats[$j]}")"
         colnum=1
+
         #Go over the columns
         for ((i=0; i<=cols; i++));
         do
@@ -352,7 +354,7 @@ function printTable(){
     if [[ $showInfo -eq 1 ]]
     then
         echo -n $'\n'
-        echo "Numero de filas: ${#}"
+        echo "Numero de filas: $(($rows-$init_row-1))"
         echo "Numero de columnas: $cols"    
     fi
 }
