@@ -5,6 +5,7 @@ IFS=$'\n'
 separator='_'           #This is the char that use tu separate the columns
 table_left_offset=2     #This value is use for spacing table from left of terminal
 declare -a offset=(1 1) #There are the space after and before a column word
+showInfo=0
 
 #Chars ▓ ▒ ░ │ ┤ ╣ ║ ╝ ╗ └ ┴ ┬ ├ ─ ┼ ╚ ╔ ╩ ╦ ╠ ═ ╬ █ ▄ ¦ ▀ ■
 lines_header_h_char="═"
@@ -74,14 +75,18 @@ function Help(){
     echo $'\t\t15:\t\t\t\tLight_Cyan'
     echo $'\t\t16:\t\t\t\tWhite'
     echo $'\tv\t\t\t\t\tDisplay version'
+    echo $'\ti\t\t\t\t\tDisplay info after table Num of columns and rows'
 
     exit
 }
 #Options Passed
 optcount=0
-while getopts ":hd:l:t:c:h:v" args;
+while getopts ":hd:l:t:c:h:vi" args;
 do
     case $args in
+         i) #Display info
+            showInfo=1
+         ;;
          c) #Selected Color
             readarray -t chars <<< "$(tr ' ' '\n' <<< $OPTARG)"
             if [[ ${#chars[@]} -ne 4 ]]
@@ -344,9 +349,12 @@ function printTable(){
 
     done 
 
-    echo -n $'\n'
-    echo "Numero de filas: ${#}"
-    echo "Numero de columnas: $cols"
+    if [[ $showInfo -eq 1 ]]
+    then
+        echo -n $'\n'
+        echo "Numero de filas: ${#}"
+        echo "Numero de columnas: $cols"    
+    fi
 }
 
 printTable $@;
