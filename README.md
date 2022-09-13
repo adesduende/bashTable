@@ -41,4 +41,4 @@ G1_G2_G3_G4_G5\n'
 ![Screenshot1](screenshot1.png)
 ![Screenshot1](screenshot_000.png)
 
-[^1]: Colores existentes [Black Red Green Orange Blue Purple Cyan Light_Gray Dark_Gray Light_Red Light_Green Yellow Light_Blue Light_Purple Light_Cyan White]
+[¹]: **Colores existentes** "Black Red Green Orange Blue Purple Cyan Light_Gray Dark_Gray Light_Red Light_Green Yellow Light_Blue Light_Purple Light_Cyan White"
