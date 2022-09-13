@@ -79,7 +79,7 @@ function Help(){
 }
 #Options Passed
 optcount=0
-while getopts ":hd:l:c:h:v" args;
+while getopts ":hd:l:t:c:h:v" args;
 do
     case $args in
          c) #Selected Color
@@ -87,6 +87,8 @@ do
             if [[ ${#chars[@]} -ne 4 ]]
             then
                 echo "Error: the number of colors must be four, if only want a one color put NC in others"
+                echo "This is the aviable color: Black Red Green Orange Blue Purple Cyan Light_Gray"
+                echo "Dark_Gray Light_Red Light_Green Yellow Light_Blue Light_Purple Light_Cyan White"
                 exit 1
             fi
 
@@ -122,13 +124,13 @@ do
          ;;
          l) #Lines table
             readarray -t chars <<< "$(tr ' ' '\n' <<< $OPTARG)"
-            if [[ ${#chars[@]} -eq 4 ]]
+            if [[ ${#chars[@]} -eq 3 ]]
             then
                 for ((i=0;i<3;i++));
                 do
                     if [[ ${#chars[$i]} -ne 1 ]] 
                     then
-                        echo "The line should be construct only by 3 characters delimiters by a space"
+                        echo "\"l\": The line should be construct only by 3 characters delimiters by a space"
                         exit 1
                     fi
                     case $i in
@@ -154,13 +156,14 @@ do
             readarray -t chars <<< "$(tr ' ' '\n' <<< $OPTARG)"
             if [[ ${#chars[@]} -eq 3 ]]
             then
-                if [[ ${#chars[$i]} -ne 1 ]] 
-                then
-                    echo "The line should be construct only by 3 characters delimiters by a space"
-                    exit 1
-                fi
+                
                 for ((i=0;i<3;i++));
                 do
+                    if [[ ${#chars[$i]} -ne 1 ]] 
+                    then
+                        echo "\"t\": The line should be construct only by 3 characters delimiters by a space"
+                        exit 1
+                    fi
                     case $i in
                         0)
                          #Horizontal
