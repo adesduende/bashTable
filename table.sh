@@ -6,6 +6,7 @@ separator='_'           #This is the char that use tu separate the columns
 table_left_offset=2     #This value is use for spacing table from left of terminal
 declare -a offset=(1 1) #There are the space after and before a column word
 showInfo=0
+header=1
 
 #Chars ▓ ▒ ░ │ ┤ ╣ ║ ╝ ╗ └ ┴ ┬ ├ ─ ┼ ╚ ╔ ╩ ╦ ╠ ═ ╬ █ ▄ ¦ ▀ ■
 lines_header_h_char="═"
@@ -50,7 +51,7 @@ function Help(){
     echo
     echo "Descripcion de la herramienta "
     echo
-    echo $"Syntax: table [-h][-v][-d \"col_delimiter\"][-l \"ch1 ch2 ch3\"][-t \"ch1 ch2 ch3\"] [-c Yellow Black NC NC] \"DataString\""
+    echo $"Syntax: table [-h][-v][-i][-n][-d \"col_delimiter\"][-l \"ch1 ch2 ch3\"][-t \"ch1 ch2 ch3\"] [-c Yellow Black NC NC] \"DataString\""
     echo
     echo $'\tOptions:'
     echo $'\th\t\t\t\t\tPrint this help'
@@ -76,14 +77,19 @@ function Help(){
     echo $'\t\t16:\t\t\t\tWhite'
     echo $'\tv\t\t\t\t\tDisplay version'
     echo $'\ti\t\t\t\t\tDisplay info after table Num of columns and rows'
+    echo $'\tn\t\t\t\t\tShow table without header'
 
     exit
 }
 #Options Passed
 optcount=0
-while getopts ":hd:l:t:c:h:vi" args;
+while getopts ":hd:l:t:c:h:vin" args;
 do
     case $args in
+         n) #No header
+            header=0
+            let optcount+=1
+         ;;
          i) #Display info
             showInfo=1
             let optcount+=1
@@ -283,10 +289,18 @@ function printTable(){
         #Print first line of title
         if [[ $i -eq 1 ]];
         then
-            echo -n $(repeat_char $'\t' $table_left_offset)
-            echo -ne $header_line_color
-            echo $(printLine $cols $lines_header_h_char $corner_header_char)
-            echo -ne $NC
+            if [[ header -eq 0 ]]
+            then
+                echo -n $(repeat_char $'\t' $table_left_offset)
+                echo -ne $line_color
+                echo $(printLine $cols $lines_h_char $corner_char)
+                echo -ne $NC
+            else
+                echo -n $(repeat_char $'\t' $table_left_offset)
+                echo -ne $header_line_color
+                echo $(printLine $cols $lines_header_h_char $corner_header_char)
+                echo -ne $NC
+            fi
         fi
         
         echo -n $(repeat_char $'\t' $table_left_offset)
@@ -297,7 +311,7 @@ function printTable(){
             lencol=${#dataMatrix[$i,$j]}
             end_line=$(($lenmax-$lencol+${offset[1]}))
 
-            if [[ $i -eq 1 ]];
+            if [[ $i -eq 1 ]] && [[ header -eq 1 ]];
             then
                 echo -ne $header_line_color
                 echo -n "$lines_header_v_char"
@@ -319,7 +333,7 @@ function printTable(){
             fi            
         done
 
-        if [[ $i -eq 1 ]];
+        if [[ $i -eq 1 ]] && [[ header -eq 1 ]];
         then            
             echo -ne $header_line_color
             echo -n "$lines_header_v_char"
@@ -332,7 +346,7 @@ function printTable(){
         echo -n $'\n'
 
         #Print second line of title
-        if [[ $i -eq 1 ]];
+        if [[ $i -eq 1 ]] && [[ header -eq 1 ]];
         then
             echo -n $(repeat_char $'\t' $table_left_offset)
             echo -ne $header_line_color
