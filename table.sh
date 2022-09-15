@@ -148,18 +148,21 @@ do
                     case $i in
                         0)
                          #Horizontal
-                         lines_h_char=${chars[$i]};;
+                         lines_h_char="${chars[$i]}";;
                         1)
                          #Vertical
-                         lines_v_char=${chars[$i]};;
+                         lines_v_char="${chars[$i]}";;
                         2)
                          #Corner
-                         corner_char=${chars[$i]};;
+                         corner_char="${chars[$i]}";;
                         *)
-                        echo "Insert only 3 chars delimiter by a space"
+                        echo "\"l\": Insert only 3 chars delimiter by a space"
                         exit 1;;
                     esac
                 done
+            else
+                echo "\"l\": The line should be construct by 3 characters delimiters by a space"
+                exit 1
             fi
             unset chars
             let optcount+=2
@@ -179,19 +182,23 @@ do
                     case $i in
                         0)
                          #Horizontal
-                         lines_header_h_char=${chars[$i]};;
+                         lines_header_h_char="${chars[$i]}";;
                         1)
                          #Vertical
-                         lines_header_v_char=${chars[$i]};;
+                         lines_header_v_char="${chars[$i]}";;
                         2)
                          #Corner
-                         corner_header_char=${chars[$i]};;
+                         corner_header_char="${chars[$i]}";;
                         *)
-                        echo "Insert only 3 chars delimiter by a space"
+                        echo "\"t\":Insert only 3 chars delimiter by a space"
                         exit 1;;
                     esac
                 done
+            else
+                echo "\"t\": The line should be construct by 3 characters delimiters by a space"
+                exit 1
             fi
+
             unset chars
             let optcount+=2
          ;;
@@ -228,7 +235,7 @@ function printLine(){
             end_line=$(($lenmax+${offset[0]}+${offset[1]}))
 
             echo -n "$3"
-            echo -n $(repeat_char $2 $end_line)
+            echo -n "$(repeat_char "$2" "$end_line")"
         done
 
         echo -n "$3"
@@ -293,12 +300,12 @@ function printTable(){
             then
                 echo -n $(repeat_char $'\t' $table_left_offset)
                 echo -ne $line_color
-                echo $(printLine $cols $lines_h_char $corner_char)
+                echo $(printLine "$cols" "$lines_h_char" "$corner_char")
                 echo -ne $NC
             else
                 echo -n $(repeat_char $'\t' $table_left_offset)
                 echo -ne $header_line_color
-                echo $(printLine $cols $lines_header_h_char $corner_header_char)
+                echo $(printLine "$cols" "$lines_header_h_char" "$corner_header_char")
                 echo -ne $NC
             fi
         fi
@@ -350,7 +357,7 @@ function printTable(){
         then
             echo -n $(repeat_char $'\t' $table_left_offset)
             echo -ne $header_line_color
-            echo $(printLine $cols $lines_header_h_char $corner_header_char)
+            echo $(printLine "$cols" "$lines_header_h_char" "$corner_header_char")
             echo -ne $NC
         fi
 
@@ -359,7 +366,7 @@ function printTable(){
         then
             echo -ne $data_line_color
             echo -n $(repeat_char $'\t' $table_left_offset)
-            echo $(printLine $cols $lines_h_char $corner_char)
+            echo "$(printLine "$cols" "$lines_h_char" "$corner_char")"
             echo -ne $NC
         fi
 
