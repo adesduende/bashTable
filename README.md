@@ -31,6 +31,7 @@ G1_G2_G3_G4_G5\n'
  - **c**:   Change the color[^1]. If use this option is necessary write the four color "title title_lines data data_lines" ex: -c "Blue NC NC NC"
  - **v**:   Show version of the script
  - **i**:   Display info about number of cols an rows
+ - **n**:   Hide header, with this option, the first row don't show as header
 
 ```bash
 ./table.sh -l "% $ %" -t "@ # ¬" -c "Red Blue Green Yellow" $data
