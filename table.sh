@@ -365,11 +365,19 @@ function printTable(){
 
     done 
 
+    #Show info about table Num of Rows and Columns
     if [[ $showInfo -eq 1 ]]
     then
-        echo -n $'\n'
-        echo "Numero de filas: $(($rows-$init_row-1))"
-        echo "Numero de columnas: $cols"    
+        if [[ header -eq 1 ]];
+        then
+            echo -n $'\n'
+            echo "Numero de filas: $(($rows-$init_row-1))"
+            echo "Numero de columnas: $cols" 
+        else
+            echo -n $'\n'
+            echo "Numero de filas: $(($rows-$init_row))"
+            echo "Numero de columnas: $cols"
+        fi 
     fi
 }
 
